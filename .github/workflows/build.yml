@@ -5,7 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
+  release:
+    types: [published]
 
 env:
   registry_name: ghcr.io
@@ -36,12 +37,10 @@ jobs:
           ${{ env.registry_name }}/${{ github.repository_owner }}/${{ env.image_name }}
         # generate Docker tags based on the following events/attributes
         tags: |
-          type=schedule
           type=ref,event=branch
           type=ref,event=pr
           type=semver,pattern={{version}}
           type=semver,pattern={{major}}.{{minor}}
-          type=semver,pattern={{major}}
         flavor: |
           latest=true
     - name: Build and push
