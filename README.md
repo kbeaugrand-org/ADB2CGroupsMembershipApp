@@ -68,7 +68,6 @@ This command creates a new Azure Function app, ADB2CGroupsMembershipApp, in the 
 az functionapp config appsettings set --resource-group ADB2CGroupsMembershipAppRG --name ADB2CGroupsMembershipApp --settings ClientId=${ADB2CGroupsMembershipAppClientId}
 az functionapp config appsettings set --resource-group ADB2CGroupsMembershipAppRG --name ADB2CGroupsMembershipApp --settings ClientSecret=${ADB2CGroupsMembershipAppClientSecret}
 az functionapp config appsettings set --resource-group ADB2CGroupsMembershipAppRG --name ADB2CGroupsMembershipApp --settings TenantId=${ADB2CGroupsMembershipAppTenantId}
-az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp
 ```
 
 ## Deployment
