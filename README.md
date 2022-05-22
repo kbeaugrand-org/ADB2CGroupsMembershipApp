@@ -45,35 +45,31 @@ On Azure Portal AD B2C Administration, go to **Applications** and select **ADB2C
 First you need to create a resource group and a Storage account to run your function app.
 
 ```ps1
-az group create --name ADB2CGroupsMembershipAppRG --location westeurope
-az storage account create --name adb2cgroupsmembershipapp --resource-group ADB2CGroupsMembershipAppRG --location westeurope --sku Standard_LRS
+az group create --name ADB2CGroupsMembershipApp --location westeurope
+az storage account create --name adb2cgroupsmembershipapp --resource-group ADB2CGroupsMembershipApp --location westeurope --sku Standard_LRS
+az appservice plan create --name ADB2CGroupsMembershipAppPlan --resource-group ADB2CGroupsMembershipApp --sku B1 --is-linux
 ```
 
 Then you can deploy your function app.
 
 ```ps1
-az functionapp create --name ADB2CGroupsMembershipApp --resource-group ADB2CGroupsMembershipAppRG --consumption-plan-location westeurope --storage-account adb2cgroupsmembershipapp
+az functionapp create --name ADB2CGroupsMembershipApp --resource-group ADB2CGroupsMembershipApp --plan ADB2CGroupsMembershipAppPlan --storage-account adb2cgroupsmembershipapp --os-type Linux --runtime dotnet --deployment-container-image-name ghcr.io/kbeaugrand-org/adb2cgroupsmembership:latest 
 ```
 
 This command creates a new Azure Function app, ADB2CGroupsMembershipApp, in the resource group ADB2CGroupsMembershipApp, with the following configuration:
 
 * Runtime: dotnet
 * Storage account: ADB2CGroupsMembershipAppStorage
-* Consumption plan: `Free`
+* Consumption plan
+* Deployment container image: ghcr.io/kbeaugrand-org/adb2cgroupsmembership:latest
 * OS type: Linux
 
 ### Configure the function
 
-```ps1
-az functionapp config appsettings set --resource-group ADB2CGroupsMembershipAppRG --name ADB2CGroupsMembershipApp --settings ClientId=${ADB2CGroupsMembershipAppClientId}
-az functionapp config appsettings set --resource-group ADB2CGroupsMembershipAppRG --name ADB2CGroupsMembershipApp --settings ClientSecret=${ADB2CGroupsMembershipAppClientSecret}
-az functionapp config appsettings set --resource-group ADB2CGroupsMembershipAppRG --name ADB2CGroupsMembershipApp --settings TenantId=${ADB2CGroupsMembershipAppTenantId}
-```
-
-## Deployment
-
-### Deploy the application
+One the Function App is created you mus configure it to use the Azure AD B2C Application credentials that were created.
 
 ```ps1
-az functionapp deployment source config-zip --resource-group ADB2CGroupsMembershipAppRG --name ADB2CGroupsMembershipApp --src ADB2CGroupsMembershipApp.zip
+az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings ClientId=${ADB2CGroupsMembershipAppClientId}
+az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings ClientSecret=${ADB2CGroupsMembershipAppClientSecret}
+az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings TenantId=${ADB2CGroupsMembershipAppTenantId}
 ```
