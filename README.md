@@ -69,7 +69,7 @@ This command creates a new Azure Function app, ADB2CGroupsMembershipApp, in the 
 One the Function App is created you mus configure it to use the Azure AD B2C Application credentials that were created.
 
 ```ps1
-az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings ClientId=${ADB2CGroupsMembershipAppClientId}
-az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings ClientSecret=${ADB2CGroupsMembershipAppClientSecret}
-az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings TenantId=${ADB2CGroupsMembershipAppTenantId}
+az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings CLIENT_ID=${ADB2CGroupsMembershipAppClientId}
+az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings CLIENT_SECRET=${ADB2CGroupsMembershipAppClientSecret}
+az functionapp config appsettings set --resource-group ADB2CGroupsMembershipApp --name ADB2CGroupsMembershipApp --settings TENANT_ID=${ADB2CGroupsMembershipAppTenantId}
 ```
